@@ -79,18 +79,6 @@ const sitemapPages: SitemapPage[] = [
         changeFrequency: 'monthly',
         priority: 0.6,
     },
-    {
-        path: '/prikhody',
-        sourcePaths: ['src/app/prikhody/store'],
-        changeFrequency: 'weekly',
-        priority: 0.7,
-    },
-    {
-        path: '/prikhody/atd',
-        sourcePaths: ['src/app/prikhody/store'],
-        changeFrequency: 'weekly',
-        priority: 0.7,
-    },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
