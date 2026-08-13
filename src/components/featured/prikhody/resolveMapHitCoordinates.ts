@@ -1,5 +1,3 @@
-import { isValidCoordinatePair } from '@/components/featured/catalogarchivesgov/utils/coordinates';
-
 interface MapHit {
     lat?: number;
     lng?: number;
@@ -24,7 +22,7 @@ export const resolveMapHitCoordinates = (item: unknown): [number, number] | null
     if (Array.isArray(item) && item.length) {
         const [, , , , lat, lng] = item;
 
-        if (typeof lat === 'number' && typeof lng === 'number' && isValidCoordinatePair(lat, lng)) {
+        if (typeof lat === 'number' && typeof lng === 'number' && Number.isFinite(lat) && Number.isFinite(lng)) {
             return [lat, lng];
         }
 
@@ -34,18 +32,18 @@ export const resolveMapHitCoordinates = (item: unknown): [number, number] | null
     const hit = item as MapHit;
 
     if (typeof hit.lat === 'number' && typeof hit.lng === 'number') {
-        return isValidCoordinatePair(hit.lat, hit.lng) ? [hit.lat, hit.lng] : null;
+        return Number.isFinite(hit.lat) && Number.isFinite(hit.lng) ? [hit.lat, hit.lng] : null;
     }
 
     if (hit.coords?.length === 2) {
         const [lat, lng] = hit.coords;
-        return isValidCoordinatePair(lat, lng) ? [lat, lng] : null;
+        return Number.isFinite(lat) && Number.isFinite(lng) ? [lat, lng] : null;
     }
 
     const lat = toFiniteNumber(hit._geoloc?.lat);
     const lng = toFiniteNumber(hit._geoloc?.lng);
 
-    if (lat !== null && lng !== null && isValidCoordinatePair(lat, lng)) {
+    if (lat !== null && lng !== null) {
         return [lat, lng];
     }
 
